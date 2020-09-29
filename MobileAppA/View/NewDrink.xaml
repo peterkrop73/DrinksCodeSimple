@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:conv="clr-namespace:MobileAppA.Converter"
+             xmlns:viewModels="clr-namespace:MobileAppA.ViewModel"
+             mc:Ignorable="d"
+             x:Class="MobileAppA.View.NewDrink">
+    <ContentPage.Resources>
+        <conv:EnumItemToKeyConverter x:Key="EnumItemToKeyConverter" />
+        <conv:EnumItemToBoolConverter x:Key="EnumItemToBoolConverter" />
+        <conv:StringToBoolConverter x:Key="StringToBoolConverter" />
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <viewModels:NewDrinkViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Margin="5,0,0,0">
+            <Button Text="Add" Command="{Binding AddCommand, Mode=OneWay}"/>
+            <Entry Placeholder="Name of Drink" Text="{Binding Name}" />
+            <Picker Title="Type of Drink" 
+                    ItemsSource="{Binding DrinkTypes, Mode=OneWay}"
+                    ItemDisplayBinding="{Binding Name}"
+                    SelectedItem="{Binding SelectedDrink}" />
+            <Picker Title="Type of Beer" 
+                    ItemsSource="{Binding BeerTypes, Mode=OneWay}"
+                    ItemDisplayBinding="{Binding Name}"
+                    SelectedItem="{Binding SelectedBeer}">
+                <Picker.Style>
+                    <Style TargetType="Picker">
+                        <Setter Property="IsVisible"  Value="False"/>
+                        <Style.Triggers>
+                            <DataTrigger TargetType="Picker" 
+                                         Binding="{Binding SelectedDrink, Converter={StaticResource EnumItemToKeyConverter}, Mode=OneWay}" 
+                                         Value="Beer">
+                                <Setter Property="IsVisible" Value="True"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Picker.Style>
+            </Picker>
+            <Picker Title="Type of Sparkling Wine" 
+                    ItemsSource="{Binding SparklingWineTypes, Mode=OneWay}"
+                    ItemDisplayBinding="{Binding Name}"
+                    SelectedItem="{Binding SelectedSparklingWine}">
+                <Picker.Style>
+                    <Style TargetType="Picker">
+                        <Setter Property="IsVisible"  Value="False"/>
+                        <Style.Triggers>
+                            <DataTrigger TargetType="Picker" 
+                                         Binding="{Binding SelectedDrink, Converter={StaticResource EnumItemToKeyConverter}, Mode=OneWay}" 
+                                         Value="SparklingWine">
+                                <Setter Property="IsVisible" Value="True"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Picker.Style>
+            </Picker>
+            <Picker Title="Alcohol percentage"                    
+                    ItemsSource="{Binding AlcoholPercentages, Mode=OneWay}"
+                    SelectedItem="{Binding SelectedAlcoholPercentages}">
+                <Picker.Style>
+                    <Style TargetType="Picker">
+                        <Setter Property="IsVisible"  Value="False"/>
+                        <Style.Triggers>
+                            <DataTrigger TargetType="Picker" 
+                                         Binding="{Binding SelectedDrink, Converter={StaticResource EnumItemToKeyConverter}, Mode=OneWay}" 
+                                         Value="Soda">
+                                <Setter Property="IsVisible" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Picker" 
+                                         Binding="{Binding SelectedDrink, Converter={StaticResource EnumItemToKeyConverter}, Mode=OneWay}" 
+                                         Value="Juice">
+                                <Setter Property="IsVisible" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Picker" 
+                                         Binding="{Binding SelectedDrink, Converter={StaticResource EnumItemToKeyConverter}, Mode=OneWay}" 
+                                         Value="Beer">
+                                <Setter Property="IsVisible" Value="True"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Picker" 
+                                         Binding="{Binding SelectedDrink, Converter={StaticResource EnumItemToKeyConverter}, Mode=OneWay}" 
+                                         Value="SparklingWine">
+                                <Setter Property="IsVisible" Value="True"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Picker" 
+                                         Binding="{Binding SelectedDrink, Converter={StaticResource EnumItemToKeyConverter}, Mode=OneWay}" 
+                                         Value="Liquor">
+                                <Setter Property="IsVisible" Value="True"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Picker.Style>
+            </Picker>
+            <StackLayout Orientation="Horizontal" Margin="5">
+                <StackLayout.Style>
+                    <Style TargetType="StackLayout">
+                        <Setter Property="IsVisible"  Value="False"/>
+                        <Style.Triggers>
+                            <DataTrigger TargetType="StackLayout" 
+                                         Binding="{Binding SelectedDrink, Converter={StaticResource EnumItemToKeyConverter}, Mode=OneWay}" 
+                                         Value="Soda">
+                                <Setter Property="IsVisible" Value="True"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackLayout.Style>
+                <Label>Diet</Label>
+                <Switch IsToggled="{Binding IsDiet}" />
+            </StackLayout>
+            <Entry Placeholder="Made from" Text="{Binding MadeFrom}">
+                <Entry.Style>
+                    <Style TargetType="Entry">
+                        <Setter Property="IsVisible"  Value="False"/>
+                        <Style.Triggers>
+                            <DataTrigger TargetType="Entry" 
+                                         Binding="{Binding SelectedDrink, Converter={StaticResource EnumItemToKeyConverter}, Mode=OneWay}" 
+                                         Value="Juice">
+                                <Setter Property="IsVisible" Value="True"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Entry.Style>
+            </Entry>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
