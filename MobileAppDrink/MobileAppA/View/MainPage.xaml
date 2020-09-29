@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:MobileAppA"
+             xmlns:viewModels="clr-namespace:MobileAppA.ViewModel"
+             mc:Ignorable="d"
+             x:Class="MobileAppA.MainPage">
+
+    <ContentPage.BindingContext>
+        <viewModels:MainPageViewModel/>
+    </ContentPage.BindingContext>
+    <StackLayout Orientation="Vertical">
+        <!-- Place new controls here -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Grid.Column="0" Text="Add Cocktail" IsEnabled="False"/>
+            <Button Grid.Row="0" Grid.Column="1" Text="Add Drink" Command="{Binding AddCommand, Mode=OneWay}"  />
+            <CollectionView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                            VerticalScrollBarVisibility="Default"
+                            ItemsSource="{Binding Beverages}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Span="1" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type viewModels:DrinkViewModel}">
+                        <Grid Margin="0,5,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name}"
+                                   FontSize="25"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Description}"/>
+                            <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
+                                   HeightRequest="50" VerticalOptions="Center" Margin="10,0,0,0">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Source" 
+                                                Value="{local:ImageResource MobileAppA.Images.poison.png}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger TargetType="Image" Binding="{Binding Type}" Value="Juice">
+                                                <Setter Property="Source" 
+                                                        Value="{local:ImageResource MobileAppA.Images.juice.png}"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Image" Binding="{Binding Type}" Value="Beer">
+                                                <Setter Property="Source" 
+                                                        Value="{local:ImageResource MobileAppA.Images.beer.png}"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Image" Binding="{Binding Type}" Value="Soda">
+                                                <Setter Property="Source" 
+                                                        Value="{local:ImageResource MobileAppA.Images.soda.png}"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Image" Binding="{Binding Type}" Value="SparklingWine">
+                                                <Setter Property="Source" 
+                                                        Value="{local:ImageResource MobileAppA.Images.sparklingwine.png}"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Image" Binding="{Binding Type}" Value="HardLiquor">
+                                                <Setter Property="Source" 
+                                                        Value="{local:ImageResource MobileAppA.Images.hardliquor.png}"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Image" Binding="{Binding Type}" Value="SoftLiquor">
+                                                <Setter Property="Source" 
+                                                        Value="{local:ImageResource MobileAppA.Images.softliquor.png}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </StackLayout>
+
+</ContentPage>
